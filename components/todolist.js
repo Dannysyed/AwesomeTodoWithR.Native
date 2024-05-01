@@ -1,15 +1,20 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Todoitem from './todoitem'
 
-const Todolist = ({ tasks }) => {
+const Todolist = ({ tasks, onDelete }) => {
     return (
-        <ScrollView style={styles.taskList}>
-            {tasks.map((task) => (
-                <Todoitem key={task.id} title={task.title} />
+        <FlatList
+            style={styles.taskList}
+            data={tasks}
+            renderItem={(item) => {
+                return <Todoitem key={item.item.id} id={item.item.id} title={item.item.title} onDelete={onDelete} />
 
-            ))}
-        </ScrollView>
+            }}
+            keyExtractor={(item, index) => {
+                return item.id
+            }} />
+
     )
 }
 

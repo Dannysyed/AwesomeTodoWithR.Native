@@ -1,10 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Todoitem = ({ title }) => {
+const Todoitem = ({ title, onDelete, id }) => {
     return (
         <View style={styles.taskItem}>
-            <Text style={styles.taskTitle}>{title}</Text>
+
+            <Pressable android_ripple={{ color: '#ddddd' }} onPress={onDelete.bind(this, id)}>
+                <View >
+                    <Text style={styles.taskTitle}>{title}</Text>
+                </View>
+            </Pressable>
         </View>
     )
 }
@@ -16,10 +21,13 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 1,
         borderColor: '#ccc',
+        backgroundColor: '#007AFF',
         borderRadius: 20,
         marginBottom: 10,
     },
     taskTitle: {
         fontSize: 16,
+        color: 'white',
+
     },
 })

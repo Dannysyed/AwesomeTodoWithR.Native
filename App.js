@@ -18,7 +18,12 @@ export default function App() {
       setTaskItem('');
     }
   };
+  const removeItem = (id) => {
 
+    setTasks(prev => {
+      return prev.filter(val => val.id !== id)
+    })
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Todo App</Text>
@@ -33,7 +38,7 @@ export default function App() {
           <Text style={styles.buttonText}>Add</Text>
         </TouchableOpacity>
       </View>
-      <Todolist tasks={tasks} />
+      <Todolist tasks={tasks} onDelete={removeItem} />
 
     </View>
   );
