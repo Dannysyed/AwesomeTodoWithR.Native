@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import Todolist from './components/todolist';
 
-const TaskItem = ({ title }) => {
-  return (
-    <View style={styles.taskItem}>
-      <Text style={styles.taskTitle}>{title}</Text>
-    </View>
-  );
-};
+
 
 export default function App() {
   const [taskItem, setTaskItem] = useState('');
@@ -38,11 +33,8 @@ export default function App() {
           <Text style={styles.buttonText}>Add</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.taskList}>
-        {tasks.map((task) => (
-          <TaskItem key={task.id} title={task.title} />
-        ))}
-      </ScrollView>
+      <Todolist tasks={tasks} />
+
     </View>
   );
 }
@@ -82,17 +74,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
-  taskList: {
-    flex: 1,
-  },
-  taskItem: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 20,
-    marginBottom: 10,
-  },
-  taskTitle: {
-    fontSize: 16,
-  },
+
+
 });
