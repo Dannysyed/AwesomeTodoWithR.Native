@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import Todolist from './components/todolist';
+import Todoinput from './components/todoinput';
+import { StatusBar } from 'expo-status-bar';
 
 
 
 export default function App() {
   const [taskItem, setTaskItem] = useState('');
+  const [modelVisible, setModalIsVisible] = useState(false);
   const [tasks, setTasks] = useState([
     { id: 1, title: 'Buy groceries' },
     { id: 2, title: 'Clean the house' },
@@ -13,6 +16,7 @@ export default function App() {
   ]);
 
   const addTask = () => {
+    modalVisibleHandler()
     if (taskItem.trim() !== '') {
       setTasks([...tasks, { id: tasks.length + 1, title: taskItem }]);
       setTaskItem('');
@@ -24,23 +28,23 @@ export default function App() {
       return prev.filter(val => val.id !== id)
     })
   }
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Todo App</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter a task"
-          value={taskItem}
-          onChangeText={(text) => setTaskItem(text)}
-        />
-        <TouchableOpacity style={styles.addButton} onPress={addTask}>
-          <Text style={styles.buttonText}>Add</Text>
-        </TouchableOpacity>
-      </View>
-      <Todolist tasks={tasks} onDelete={removeItem} />
 
-    </View>
+  const modalVisibleHandler = () => {
+
+    setModalIsVisible(prev => !prev);
+  }
+  return (
+    <>
+      <StatusBar style='light' />
+      <View style={styles.container}>
+        <Text style={styles.title}>Todo App</Text>
+        <TouchableOpacity style={styles.addButton} onPress={modalVisibleHandler}>
+          <Text style={styles.buttonText}>Add task</Text>
+        </TouchableOpacity>
+        <Todoinput modalVisible={modelVisible} taskItem={taskItem} addTask={addTask} setTaskItem={setTaskItem} modalVisibleHandler={modalVisibleHandler} />
+        <Todolist tasks={tasks} onDelete={removeItem} />
+      </View>
+    </>
   );
 }
 
@@ -48,37 +52,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#520f5e',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    paddingHorizontal: 10,
-    marginRight: 10,
-  },
-  addButton: {
-    backgroundColor: '#007AFF',
+    margin: 20,
+    color: 'white',
+    textAlign: 'center'
+
+  }, addButton: {
+    backgroundColor: '#ab5bb5',
     borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
     paddingVertical: 10,
     paddingHorizontal: 20,
+    marginBottom: 20,
+    alignSelf: 'flex-start',
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: 'bold',
   },
-
-
 });

@@ -21,13 +21,14 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 1,
         borderColor: '#ccc',
-        backgroundColor: '#007AFF',
+        backgroundColor: '#860dab',
         borderRadius: 20,
         marginBottom: 10,
     },
     taskTitle: {
         fontSize: 16,
         color: 'white',
+        textAlign: 'center'
 
     },
 })
